@@ -1,18 +1,38 @@
-name: Practice-workflow
+name: practice-job
 on: push
 jobs:
-  first-job:
+  lint-job:
     runs-on: ubuntu-latest
     steps:
-      - name: install code on ubuntu
-        uses: actions/checkout@v4
-      - name: install dependencies
-        run: npm install ci
-      - name: lint
-        run: npm run lint
-      - name: test code
-        run: npm run test
-      - name: deploy code
-        run: npm run build
-      - name: deploying code
-        run: echo "deploying..."
+      -name: copying code to machine
+       uses: actions/checkout@v4
+      -name: install dependencies
+       run: npm install ci
+      -name: Lint
+       run: npm run lint
+  test-job:
+    needs: lint-job
+    runs-on: ubuntu-latest
+    steps:
+      -name: copying code to machine
+       uses: actions/checkout@v4
+      -name: install dependencies
+       run: npm install ci
+      -name: Test
+       run: npm run test
+  deploy-job:
+    needs: [lint-job,test-job]
+    runs-on: ubuntu-latest
+    steps:
+      -name: copying code to machine
+       uses: actions/checkout@v4
+      -name: install dependencies
+       run: npm install ci
+      -name: Deploy
+       run: npm run build
+      -name: deploying meesage
+       run: echo "deploying...."
+
+
+      
+      
