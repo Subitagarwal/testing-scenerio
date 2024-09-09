@@ -1,7 +1,7 @@
 name: practice-job
 on: push
 jobs:
-  lint-job:
+  lint:
     runs-on: ubuntu-latest
     steps:
       -name: copying code to machine
@@ -10,8 +10,8 @@ jobs:
        run: npm install ci
       -name: Lint
        run: npm run lint
-  test-job:
-    needs: lint-job
+  test:
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       -name: copying code to machine
@@ -20,8 +20,8 @@ jobs:
        run: npm install ci
       -name: Test
        run: npm run test
-  deploy-job:
-    needs: [lint-job,test-job]
+  deploy:
+    needs: [lint,test]
     runs-on: ubuntu-latest
     steps:
       -name: copying code to machine
