@@ -1,0 +1,38 @@
+name: practice-job
+on: push
+jobs:
+  lint-job:
+    runs-on: ubuntu-latest
+    steps:
+      -name: copying code to machine
+       uses: actions/checkout@v4
+      -name: install dependencies
+       run: npm install ci
+      -name: Lint
+       run: npm run lint
+  test-job:
+    needs: lint-job
+    runs-on: ubuntu-latest
+    steps:
+      -name: copying code to machine
+       uses: actions/checkout@v4
+      -name: install dependencies
+       run: npm install ci
+      -name: Test
+       run: npm run test
+  deploy-job:
+    needs: [lint-job,test-job]
+    runs-on: ubuntu-latest
+    steps:
+      -name: copying code to machine
+       uses: actions/checkout@v4
+      -name: install dependencies
+       run: npm install ci
+      -name: Deploy
+       run: npm run deploy
+      -name: deploying meesage
+       run: echo "deploying...."
+
+
+      
+      
