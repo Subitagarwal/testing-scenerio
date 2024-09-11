@@ -1,4 +1,4 @@
-name: Deployment Exercise 2
+name: Artificats
 on: push
 jobs:
   lint:
@@ -20,7 +20,7 @@ jobs:
         run: npm ci
       - name: Test code
         run: npm run test
-  deploy:
+  build:
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -30,5 +30,23 @@ jobs:
         run: npm ci
       - name: Build code
         run: npm run build
+      - name: upload artificats
+        uses: actions/upload-artifact@v4
+        with:
+          name: hridvik
+          path: |
+            dist
+            hridvik.json
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: download-artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: hridvik
+      - name: output-contents
+        run: ls
       - name: Deploy code
         run: echo "Deploying..."
