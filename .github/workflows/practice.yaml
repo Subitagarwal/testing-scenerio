@@ -33,6 +33,7 @@ jobs:
       - name: Build code
         run: npm run build
       - name: publish
+        id: publish
         run: find dist/assets/*.js -type f -execdir echo 'output={}'>> $GITHUB_OUTPUT ';'
       - name: upload artificats
         uses: actions/upload-artifact@v4
